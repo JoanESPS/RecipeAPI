@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5b03b6fb-fdc8-4bc1-b03a-56807147ed92" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/config/auth.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/config/db.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/controllers/auth.controller.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/controllers/user.controller.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/middleware/authJwt.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/middleware/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/middleware/verifySignUp.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/models/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/models/role.model.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/models/user.model.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/routes/auth.routes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2JonXIZKs3uFqbOGYrvalYZY06e" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenDatabaseViewOnStart": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/joane/Documents/Projets/RecipeAPI",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "settings.javascript.linters.tslint",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2022.2.1\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\joane\Documents\Projets\RecipeAPI\app" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5b03b6fb-fdc8-4bc1-b03a-56807147ed92" name="Changes" comment="" />
+      <created>1672753341602</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1672753341602</updated>
+      <workItem from="1672753343458" duration="8647000" />
+      <workItem from="1672826208816" duration="2519000" />
+      <workItem from="1672838132900" duration="16323000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
