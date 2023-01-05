@@ -44,10 +44,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING
         },
         srcRating: {
-            type: Sequelize.NUMBER
+            type: Sequelize.INTEGER
         },
         userRating: {
-            type: Sequelize.NUMBER
+            type: Sequelize.INTEGER
         },
         tried: {
             type: Sequelize.BOOLEAN

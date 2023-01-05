@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const RecipeIngredient = sequelize.define("users", {
+    const RecipeIngredient = sequelize.define("recipeIngredients", {
         idIngredient: {
             type: Sequelize.INTEGER
         },
