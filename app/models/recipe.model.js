@@ -52,7 +52,7 @@ module.exports = (sequelize, Sequelize) => {
         tried: {
             type: Sequelize.BOOLEAN
         },
-        comments: {
+        comment: {
             type: Sequelize.STRING
         }
     });
