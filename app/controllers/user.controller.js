@@ -3,6 +3,8 @@ const userRepository = db.user;
 const Op = db.Sequelize.Op;
 const {authJwt} = require("../middleware");
 const bcrypt = require("bcryptjs");
+const errors = require("../services/errors.services")
+const usersServices = require("../services/users.services")
 
 // Changement des informations utilisateur
 exports.patchUser = async (req, res) => {
@@ -16,11 +18,14 @@ exports.patchUser = async (req, res) => {
         newEmail: req.body.newEmail || userToModify.email
     }
 
-    // Comparaison des mots de passe criptés
+    // Comparaison des mots de passe cryptés
     let passwordIsValid = bcrypt.compareSync(
         credentials.oldPassword,
         userToModify.password
     );
+
+    // Récupération du username
+    const username = await usersServices.getUsername(req, res)
 
     // Vérification qu'un user modifie ses propres informations
     if (req.userId == req.params.id) {
@@ -53,7 +58,7 @@ exports.patchUser = async (req, res) => {
                     message: "Erreur dans le changement d'identifiants pour l'id=" + req.params.id
                 })});
             res.status(200).send({
-                message: "Les informations de l'utilisateur ont été changées."
+                message: `Les informations de ${username} ont été changées.`
             });
         }
     }
@@ -71,6 +76,10 @@ exports.putUser = async (req, res) => {
     // Récupération du user à modifier
     const id = req.params.id;
 
+    // Récupération du username
+    const username = await usersServices.getUsername(req, res)
+
+    // Ecrasement des informations du compte cible par un admin
     userRepository.update({
         username: req.body.username,
         email: req.body.email,
@@ -81,11 +90,11 @@ exports.putUser = async (req, res) => {
     }).then(num => {
         if (num == 1) {
             res.status(200).send({
-                message: `Le compte associé à l'id:${id} a bien été mis à jour.`
+                message: `Le compte associé de l'utilisateur ${username} (id: ${id}) a bien été mis à jour.`
             });
         } else {
             res.status(400).send({
-                message: `Le compte associé à l'id:${id} n'a pas été mis à jour.`
+                message: `Le compte associé à lutilisateur ${username} (id: ${id}) n'a pas été mis à jour.`
             });
         }
     })
@@ -96,20 +105,48 @@ exports.putUser = async (req, res) => {
         });
 };
 
+exports.deleteUser = async (req, res) => {
+    const id = req.params.id;
+
+    // Récupération du nom de l'utilisateur
+    const username = await usersServices.getUsername(req, res)
+
+    // Suppression d'un compte utilisateur par un admin
+    userRepository.destroy({
+        where: {id: id}
+    })
+        .then(num => {
+            if (num == 1) {
+                res.status(200).send({
+                    message: `${username} (id: ${id}) a été supprimé.`
+                });
+            } else {
+                res.status(400).send({
+                    message: `${username} (id: ${id}) n'a pas pu être supprimé.`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Le serveur ne répond pas"
+            });
+        });
+}
 
 
-exports.allAccess = (req, res) => {
-    res.status(200).send("Public Content.");
-};
+exports.deleteAllUsers = async (req, res) => {
 
-exports.userBoard = (req, res) => {
-    res.status(200).send("User Content.");
-};
-
-exports.adminBoard = (req, res) => {
-    res.status(200).send("Admin Content.");
-};
-
-exports.moderatorBoard = (req, res) => {
-    res.status(200).send("Moderator Content.");
-};
+    // Suppression de tous les comptes utilisateur par un admin
+        userRepository.destroy({
+            where: {}
+        })
+            .then(nums => {
+                    res.status(200).send({
+                        message: `Tous les utilisateurs ont été supprimés.`
+                    })})
+            .catch(err => {
+                res.status(500).send({
+                    message: "Le serveur ne répond pas"
+                });
+            });
+}

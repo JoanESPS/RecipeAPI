@@ -2,6 +2,7 @@ const db = require("../models");
 const config = require("../config/auth.config");
 const User = db.user;
 const Role = db.role;
+const usersServices = require("../services/users.services")
 
 const Op = db.Sequelize.Op;
 
@@ -25,13 +26,13 @@ exports.signup = (req, res) => {
                     }
                 }).then(roles => {
                     user.setRoles(roles).then(() => {
-                        res.send({ message: "User was registered successfully!" });
+                        res.status(201).send({ message: `L'utilisateur a bien été créé.` });
                     });
                 });
             } else {
                 // user role = 1
                 user.setRoles([1]).then(() => {
-                    res.send({ message: "User was registered successfully!" });
+                    res.status(201).send({ message: `L'utilisateur a bien été créé.` });
                 });
             }
         })
@@ -48,7 +49,7 @@ exports.signin = (req, res) => {
     })
         .then(user => {
             if (!user) {
-                return res.status(404).send({ message: "User Not found." });
+                return res.status(404).send({ message: "Utilisateur non trouvé." });
             }
 
             var passwordIsValid = bcrypt.compareSync(
@@ -59,7 +60,7 @@ exports.signin = (req, res) => {
             if (!passwordIsValid) {
                 return res.status(401).send({
                     accessToken: null,
-                    message: "Invalid Password!"
+                    message: "Mot de passe erroné!"
                 });
             }
 
