@@ -1,9 +1,6 @@
 const db = require("../models");
 const userRepository = db.user;
-const Op = db.Sequelize.Op;
-const {authJwt} = require("../middleware");
 const bcrypt = require("bcryptjs");
-const errors = require("../services/errors.services")
 const usersServices = require("../services/users.services")
 
 // Changement des informations utilisateur
