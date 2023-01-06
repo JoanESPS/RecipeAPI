@@ -17,7 +17,7 @@ module.exports = function(app) {
         [authJwt.verifyToken],
         controller.postRecipe
     );
-/**
+
     app.get(
         "/api/recipes/",
         [authJwt.verifyToken],
@@ -29,19 +29,20 @@ module.exports = function(app) {
         [authJwt.verifyToken],
         controller.getOneRecipe
     );
-
+/**
     app.get(
         "/api/recipes/ingredients/",
         [authJwt.verifyToken],
         controller.getAllIngredients
     );
+**/
 
     app.patch(
         "/api/recipes/:id",
         [authJwt.verifyToken],
-        controller.getOneIngredient
+        controller.patchRecipe
     );
-
+/**
     app.delete(
         "/api/recipes/:id",
         [authJwt.verifyToken],

@@ -1,7 +1,8 @@
 const db = require("../models");
 const Op = db.Sequelize.Op;
 const bcrypt = require("bcryptjs");
-const Recipe = db.recipe
+const recipeRepository = db.recipe
+const userRepository = db.user
 
 
 // Création d'une recette
@@ -15,9 +16,10 @@ exports.postRecipe = (req, res) => {
         return;
     }
 
-    Recipe.create({
+    recipeRepository.create({
         name: req.body.name,
-        source: req.body.source
+        source: req.body.source,
+        userId: req.userId
     })
         .then(recipe => {
             res.send(recipe);
@@ -27,4 +29,112 @@ exports.postRecipe = (req, res) => {
                 message : err.message || "Le serveur ne répond pas"
             });
         });
+};
+
+//Récupérer une recette
+exports.getAllRecipes = (req, res) => {
+    const name = req.query.name;
+    let condition = name ? { title: { [Op.like]: `%${name}%` } } : null;
+
+    recipeRepository.findAll({ where: condition })
+        .then(recipe => {
+            res.send(recipe);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Le serveur ne répond pas."
+            });
+        });
+};
+
+// Récupérer toutes les recettes
+exports.getOneRecipe = (req, res) => {
+    const id = req.params.id;
+
+    recipeRepository.findByPk(id)
+        .then(recipe => {
+            if (recipe) {
+                res.send(recipe);
+            } else {
+                res.status(404).send({
+                    message: `La recette avec l'id ${id} n'existe pas.`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "Le serveur ne répond pas"
+            });
+        });
+};
+
+// Changement des informations d'une recette
+exports.patchRecipe = async (req, res) => {
+    // Récupération du user à modifier
+    const recipeToModify = await recipeRepository.findByPk(req.params.id);
+
+    // Organisation du body
+    const recipe = {
+        newName: req.body.newName || recipeToModify.name,
+        newUserId: req.body.newUserId || recipeToModify.userId,
+        newSource: req.body.newSource || recipeToModify.source,
+        newTarget: req.body.newTarget || recipeToModify.target,
+        newVegetarian: req.body.newVegetarian || recipeToModify.vegetarian,
+        newVegan: req.body.newVegan || recipeToModify.vegan,
+        newCountry: req.body.newCountry || recipeToModify.country,
+        newHot: req.body.newHot || recipeToModify.hot,
+        newCold: req.body.newCold || recipeToModify.cold,
+        newSeason: req.body.newSeason || recipeToModify.season,
+        newCookTime: req.body.newCookTime || recipeToModify.cookTime,
+        newPrepTime: req.body.newPrepTime || recipeToModify.prepTime,
+        newTotalTime: req.body.newTotalTime || recipeToModify.totalTime,
+        newDifficulty: req.body.newDifficulty || recipeToModify.difficulty,
+        newSrcRating: req.body.newSrcRating || recipeToModify.srcRating,
+        newUserRating: req.body.newUserRating || recipeToModify.userRating,
+        newTried: req.body.newTried || recipeToModify.tried,
+        newComment: req.body.newComment || recipeToModify.comment,
+    }
+
+    // Vérification qu'un user modifie ses propres recettes
+    if (req.userId == recipeToModify.userId) {
+
+        // Utilisation de .update avec un body déclaré à la main
+        await recipeRepository.update({
+                name: recipe.newName,
+                userId: recipe.newUserId,
+                source: recipe.newSource,
+                target: recipe.newTarget,
+                vegetarian: recipe.newVegetarian,
+                vegan: recipe.newVegan,
+                country: recipe.newCountry,
+                hot: recipe.newHot,
+                cold: recipe.newCold,
+                season: recipe.newSeason,
+                cookTime: recipe.newCookTime,
+                prepTime: recipe.newPrepTime,
+                totalTime: recipe.newTotalTime,
+                difficulty: recipe.newDifficulty,
+                srcRating: recipe.newSrcRating,
+                userRating: recipe.newUserRating,
+                tried: recipe.newTried,
+                comment: recipe.newComment,
+            },
+            {
+                where : {id: req.params.id}
+            }).catch(err => {
+            res.status(500).send({
+                message: "Erreur dans le changement d'informations de la recette pour l'id=" + req.params.id
+            })});
+        res.status(200).send({
+            message: `Les informations de ${recipeToModify.name} ont été changées.`
+        });
+    }
+
+    // message d'erreur lorsqu'un user souhaite modifier les informations de la recette d'un autre user
+    else {
+        res.status(403).send({
+            message: "Vous n'avez pas les droits nécessaires à cette action."
+        })
+    }
 };

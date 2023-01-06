@@ -31,13 +31,13 @@ exports.getOneUser = (req, res) => {
                 res.send(user);
             } else {
                 res.status(404).send({
-                    message: `L'utilisateur avec l'id : ${id} n'existe pas.`
+                    message: `L'utilisateur avec l'id ${id} n'existe pas.`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Error retrieving Tutorial with id=" + id
+                message: err.message || "Le serveur ne répond pas"
             });
         });
 };
