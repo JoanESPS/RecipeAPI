@@ -80,18 +80,18 @@ exports.putUser = async (req, res) => {
         where: {id: id}
     }).then(num => {
         if (num == 1) {
-            res.send({
-                message: `Le user d'id:${id} a été correctement modifié`
+            res.status(200).send({
+                message: `Le compte associé à l'id:${id} a bien été mis à jour.`
             });
         } else {
-            res.send({
-                message: `Le user d'id=${id} n'a pas pu être modifié. L'erreur doit venir du body ou l'id n'existe pas.`
+            res.status(400).send({
+                message: `Le compte associé à l'id:${id} n'a pas été mis à jour.`
             });
         }
     })
         .catch(err => {
             res.status(500).send({
-                message: "Erreur pour la modification de l'user d'id=" + id
+                message: "Le serveur ne répond pas"
             });
         });
 };
