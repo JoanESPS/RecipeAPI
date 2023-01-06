@@ -66,7 +66,35 @@ exports.patchUser = async (req, res) => {
     }
 };
 
+// Changement des informations utilisateur intégrales par un admin
+exports.putUser = async (req, res) => {
+    // Récupération du user à modifier
+    const id = req.params.id;
 
+    userRepository.update({
+        username: req.body.username,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password,8),
+        roles: req.body.roles
+    }, {
+        where: {id: id}
+    }).then(num => {
+        if (num == 1) {
+            res.send({
+                message: `Le user d'id:${id} a été correctement modifié`
+            });
+        } else {
+            res.send({
+                message: `Le user d'id=${id} n'a pas pu être modifié. L'erreur doit venir du body ou l'id n'existe pas.`
+            });
+        }
+    })
+        .catch(err => {
+            res.status(500).send({
+                message: "Erreur pour la modification de l'user d'id=" + id
+            });
+        });
+};
 
 
 

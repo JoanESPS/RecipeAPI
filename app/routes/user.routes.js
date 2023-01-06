@@ -35,4 +35,10 @@ module.exports = function(app) {
         [authJwt.verifyToken],
         controller.patchUser
     );
+
+    app.put(
+        "/api/users/:id",
+        [authJwt.verifyToken, authJwt.isAdmin],
+        controller.putUser
+    );
 };
