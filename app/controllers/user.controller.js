@@ -2,6 +2,45 @@ const db = require("../models");
 const userRepository = db.user;
 const bcrypt = require("bcryptjs");
 const usersServices = require("../services/users.services")
+const {Op} = require("sequelize");
+
+//Récupérer les informations de tous les utilisateurs
+exports.getAllUsers = (req, res) => {
+    const username = req.query.username;
+    let condition = username ? { title: { [Op.like]: `%${username}%` } } : null;
+
+    userRepository.findAll({ where: condition })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Le serveur ne répond pas."
+            });
+        });
+};
+
+// Récupérer les informations d'un utilisateur
+exports.getOneUser = (req, res) => {
+    const id = req.params.id;
+
+    userRepository.findByPk(id)
+        .then(user => {
+            if (user) {
+                res.send(user);
+            } else {
+                res.status(404).send({
+                    message: `L'utilisateur avec l'id : ${id} n'existe pas.`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "Error retrieving Tutorial with id=" + id
+            });
+        });
+};
 
 // Changement des informations utilisateur
 exports.patchUser = async (req, res) => {

@@ -11,6 +11,18 @@ module.exports = function(app) {
         next();
     });
 
+    app.get(
+        "/api/users/",
+        [authJwt.verifyToken, authJwt.isAdmin],
+        controller.getAllUsers
+    )
+
+    app.get(
+        "/api/users/:id",
+        [authJwt.verifyToken, authJwt.isAdmin, errors.isIdExisting],
+        controller.getOneUser
+    )
+
     app.patch(
         "/api/users/:id",
         [authJwt.verifyToken, errors.isIdExisting],
