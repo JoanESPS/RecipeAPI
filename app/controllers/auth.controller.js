@@ -47,7 +47,7 @@ exports.signin = (req, res) => {
             username: req.body.username
         }
     })
-        .then(user => {
+        .then(async user => {
             if (!user) {
                 return res.status(404).send({ message: "Utilisateur non trouvé." });
             }
@@ -63,8 +63,10 @@ exports.signin = (req, res) => {
                     message: "Mot de passe erroné!"
                 });
             }
+            var roles = await user.getRoles()
+            console.log (roles)
 
-            var token = jwt.sign({ id: user.id }, config.secret, {
+            var token = jwt.sign({ id: user.id, roles: roles }, config.secret, {
                 expiresIn: 86400 // 24 hours
             });
 

@@ -19,6 +19,7 @@ verifyToken = (req, res, next) => {
             });
         }
         req.userId = decoded.id;
+        req.userRoles = decoded.roles.map(role => role.name);
         next();
     });
 };

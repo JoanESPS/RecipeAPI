@@ -150,7 +150,7 @@ exports.patchRecipe = async (req, res) => {
             });
         }
 
-        // message d'erreur lorsqu'un user souhaite modifier les informations de la recette d'un autre user
+        // Message d'erreur lorsqu'un user souhaite modifier les informations de la recette d'un autre user
         else {
             res.status(403).send({
                 message: "Vous n'avez pas les droits nécessaires à cette action."
@@ -162,18 +162,15 @@ exports.patchRecipe = async (req, res) => {
 exports.deleteOneRecipe = async (req, res) => {
     const id = req.params.id;
     console.log(id)
-    // Récupération du user à modifier
-    const recipeToModify = await recipeRepository.findByPk(req.params.id);
-    const recipeName = await recipeToModify.name;
-    const user = await userRepository.findByPk(req.userId)
-    console.log(recipeToModify)
-    console.log(recipeName)
-    console.log(req.userId)
-    console.log(recipeToModify.userId)
-    console.log(user)
-    console.log(user.getRoles().then(roles => {return roles}))
-    if (req.userId == recipeToModify.userId || "admin" in user.roles || "moderator" in user.roles) {
-        // Suppression d'un compte utilisateur par un admin
+
+    // Récupération de la recette à supprimer
+    const recipeToDelete = await recipeRepository.findByPk(req.params.id);
+    const recipeName = await recipeToDelete.name;
+
+    // Vérification des autorisations
+    if (req.userId == recipeToDelete.userId || req.userRoles.includes('admin') || req.userRoles.includes('moderator')) {
+
+        // Suppression d'une recette
         recipeRepository.destroy({
             where: {id: id}
         })
