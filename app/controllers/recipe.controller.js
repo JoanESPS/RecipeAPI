@@ -33,10 +33,10 @@ exports.postRecipe = (req, res) => {
         });
 };
 
-//Récupérer une recette
+//Récupérer toutes les recettes
 exports.getAllRecipes = (req, res) => {
     const name = req.query.name;
-    let condition = name ? { title: { [Op.like]: `%${name}%` } } : null;
+    let condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
 
     recipeRepository.findAll({ where: condition })
         .then(recipe => {
@@ -50,7 +50,24 @@ exports.getAllRecipes = (req, res) => {
         });
 };
 
-// Récupérer toutes les recettes
+//Récupérer les recettes en fonction des flags
+exports.getRecipesByFlags = (req, res) => {
+    const name = req.query.name;
+    let conditionName = name ? { name: { [Op.like]: `%${name}%` } } : null;
+
+    recipeRepository.findAll({ where: conditionName })
+        .then(recipe => {
+            res.send(recipe);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Le serveur ne répond pas."
+            });
+        });
+};
+
+// Récupérer une recette
 exports.getOneRecipe = (req, res) => {
     const id = req.params.id;
 
@@ -198,3 +215,21 @@ exports.deleteOneRecipe = async (req, res) => {
         });
     }
 };
+
+exports.deleteAllRecipes = async (req, res) => {
+
+    // Suppression de toutes les recettes par un modérateur
+    recipeRepository.destroy({
+        where: {}
+    })
+        .then(nums => {
+            res.status(200).send({
+                message: `Toutes les recettes ont été supprimées.`
+            })
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Le serveur ne répond pas"
+            });
+        });
+}

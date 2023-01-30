@@ -29,13 +29,11 @@ module.exports = function(app) {
         [authJwt.verifyToken],
         controller.getOneRecipe
     );
-/**
     app.get(
-        "/api/recipes/ingredients/",
+        "/api/recipes/",
         [authJwt.verifyToken],
-        controller.getAllIngredients
+        controller.getRecipesByFlags
     );
-**/
 
     app.patch(
         "/api/recipes/:id",
@@ -48,13 +46,11 @@ module.exports = function(app) {
         [authJwt.verifyToken],
         controller.deleteOneRecipe
     );
-    /**
     app.delete(
         "/api/recipes/",
-        [authJwt.verifyToken],
+        [authJwt.verifyToken, authJwt.isModeratorOrAdmin],
         controller.deleteAllRecipes
     );
-**/
 };
 
 
