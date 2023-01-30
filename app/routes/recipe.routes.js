@@ -42,13 +42,13 @@ module.exports = function(app) {
         [authJwt.verifyToken],
         controller.patchRecipe
     );
-/**
+
     app.delete(
         "/api/recipes/:id",
         [authJwt.verifyToken],
         controller.deleteOneRecipe
     );
-
+    /**
     app.delete(
         "/api/recipes/",
         [authJwt.verifyToken],

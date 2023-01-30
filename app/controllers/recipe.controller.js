@@ -1,6 +1,8 @@
 const db = require("../models");
 const Op = db.Sequelize.Op;
 const bcrypt = require("bcryptjs");
+const usersServices = require("../services/users.services");
+const {authJwt} = require("../middleware");
 const recipeRepository = db.recipe
 const userRepository = db.user
 
@@ -154,5 +156,48 @@ exports.patchRecipe = async (req, res) => {
                 message: "Vous n'avez pas les droits nécessaires à cette action."
             })
         }
+    }
+};
+
+exports.deleteOneRecipe = async (req, res) => {
+    const id = req.params.id;
+    console.log(id)
+    // Récupération du user à modifier
+    const recipeToModify = await recipeRepository.findByPk(req.params.id);
+    const recipeName = await recipeToModify.name;
+    const user = await userRepository.findByPk(req.userId)
+    console.log(recipeToModify)
+    console.log(recipeName)
+    console.log(req.userId)
+    console.log(recipeToModify.userId)
+    console.log(user)
+    console.log(user.getRoles().then(roles => {return roles}))
+    if (req.userId == recipeToModify.userId || "admin" in user.roles || "moderator" in user.roles) {
+        // Suppression d'un compte utilisateur par un admin
+        recipeRepository.destroy({
+            where: {id: id}
+        })
+            .then(num => {
+                if (num == 1) {
+                    res.status(200).send({
+                        message: `La recette ${recipeName} (id: ${id}) a été supprimé.`
+                    });
+                } else {
+                    res.status(400).send({
+                        message: `${recipeName} (id: ${id}) n'a pas pu être supprimé.`
+                    });
+                }
+            })
+            .catch(err => {
+                res.status(500).send({
+                    message: "Le serveur ne répond pas."
+                });
+            });
+    }
+
+    else {
+        res.status(403).send({
+            message: "Utilisateur non autorisé."
+        });
     }
 };
