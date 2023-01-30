@@ -7,9 +7,6 @@
     <list default="true" id="0e00a4a3-0367-493e-855c-6257b831a123" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/controllers/recipe.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/recipe.controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/user.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/user.controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/recipe.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/recipe.model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/recipe.routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/recipe.routes.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +47,7 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.linters.tslint&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2022.2.1\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2022.3.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -76,6 +73,7 @@
       <workItem from="1672826208816" duration="2519000" />
       <workItem from="1672838132900" duration="21421000" />
       <workItem from="1672992996731" duration="5102000" />
+      <workItem from="1675066667243" duration="4463000" />
     </task>
     <servers />
   </component>

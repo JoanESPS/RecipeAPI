@@ -73,7 +73,8 @@ exports.getOneRecipe = (req, res) => {
 exports.patchRecipe = async (req, res) => {
     // Récupération du user à modifier
     const recipeToModify = await recipeRepository.findByPk(req.params.id);
-
+    let testBody = true;
+    let keyList = [];
     // Organisation du body
     const recipe = {
         newName: req.body.newName || recipeToModify.name,
@@ -96,45 +97,62 @@ exports.patchRecipe = async (req, res) => {
         newComment: req.body.newComment || recipeToModify.comment,
     }
 
-    // Vérification qu'un user modifie ses propres recettes
-    if (req.userId == recipeToModify.userId) {
-
-        // Utilisation de .update avec un body déclaré à la main
-        await recipeRepository.update({
-                name: recipe.newName,
-                userId: recipe.newUserId,
-                source: recipe.newSource,
-                target: recipe.newTarget,
-                vegetarian: recipe.newVegetarian,
-                vegan: recipe.newVegan,
-                country: recipe.newCountry,
-                hot: recipe.newHot,
-                cold: recipe.newCold,
-                season: recipe.newSeason,
-                cookTime: recipe.newCookTime,
-                prepTime: recipe.newPrepTime,
-                totalTime: recipe.newTotalTime,
-                difficulty: recipe.newDifficulty,
-                srcRating: recipe.newSrcRating,
-                userRating: recipe.newUserRating,
-                tried: recipe.newTried,
-                comment: recipe.newComment,
-            },
-            {
-                where : {id: req.params.id}
-            }).catch(err => {
-            res.status(500).send({
-                message: "Erreur dans le changement d'informations de la recette pour l'id=" + req.params.id
-            })});
-        res.status(200).send({
-            message: `Les informations de ${recipeToModify.name} ont été changées.`
-        });
+    // On s'assure que les informations mentionnées dans le body sont correctes
+    for (let key in req.body) {
+        if (!(key in recipe)) {
+            keyList.push(key)
+            testBody = false
+        }
     }
 
-    // message d'erreur lorsqu'un user souhaite modifier les informations de la recette d'un autre user
-    else {
-        res.status(403).send({
-            message: "Vous n'avez pas les droits nécessaires à cette action."
+    if (!testBody) {
+        res.status(400).send({
+            message: `Les clés suivantes: [${keyList}], ne font pas partie des clés autorisées, se référer à la documentation pour voir les clés valides.`
         })
+    }
+
+    // On effectue la modification uniquement si toutes les clés sont correctes
+    else {
+        // Vérification qu'un user modifie ses propres recettes
+        if (req.userId == recipeToModify.userId) {
+
+            // Utilisation de .update avec un body déclaré à la main
+            await recipeRepository.update({
+                    name: recipe.newName,
+                    userId: recipe.newUserId,
+                    source: recipe.newSource,
+                    target: recipe.newTarget,
+                    vegetarian: recipe.newVegetarian,
+                    vegan: recipe.newVegan,
+                    country: recipe.newCountry,
+                    hot: recipe.newHot,
+                    cold: recipe.newCold,
+                    season: recipe.newSeason,
+                    cookTime: recipe.newCookTime,
+                    prepTime: recipe.newPrepTime,
+                    totalTime: recipe.newTotalTime,
+                    difficulty: recipe.newDifficulty,
+                    srcRating: recipe.newSrcRating,
+                    userRating: recipe.newUserRating,
+                    tried: recipe.newTried,
+                    comment: recipe.newComment,
+                },
+                {
+                    where : {id: req.params.id}
+                }).catch(err => {
+                res.status(500).send({
+                    message: "Erreur dans le changement d'informations de la recette pour l'id=" + req.params.id
+                })});
+            res.status(200).send({
+                message: `Les informations de ${recipeToModify.name} ont été changées.`
+            });
+        }
+
+        // message d'erreur lorsqu'un user souhaite modifier les informations de la recette d'un autre user
+        else {
+            res.status(403).send({
+                message: "Vous n'avez pas les droits nécessaires à cette action."
+            })
+        }
     }
 };
