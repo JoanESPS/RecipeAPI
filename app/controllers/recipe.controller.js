@@ -35,7 +35,7 @@ exports.postRecipe =(req, res) => {
 
 
 //Récupérer toutes les recettes avec flags optionnels
-exports.getAllRecipes = (req, res) => {
+exports.getRecipes = (req, res) => {
 
     recipeRepository.findAll({where: req.query})
         .then(recipe => {

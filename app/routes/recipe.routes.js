@@ -21,7 +21,7 @@ module.exports = function(app) {
     app.get(
         "/api/recipes/",
         [authJwt.verifyToken],
-        controller.getAllRecipes
+        controller.getRecipes
     );
 
     app.get(
