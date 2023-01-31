@@ -8,7 +8,7 @@ const userRepository = db.user
 
 
 // Création d'une recette
-exports.postRecipe = (req, res) => {
+exports.postRecipe =(req, res) => {
 
     // Vérification des données saisies par le client
     if (!req.body.name || !req.body.source) {
@@ -33,12 +33,11 @@ exports.postRecipe = (req, res) => {
         });
 };
 
-//Récupérer toutes les recettes
+
+//Récupérer toutes les recettes avec flags optionnels
 exports.getAllRecipes = (req, res) => {
-    const name = req.query.name;
-    let condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
 
-    recipeRepository.findAll({ where: condition })
+    recipeRepository.findAll({where: req.query})
         .then(recipe => {
             res.send(recipe);
         })
@@ -50,22 +49,6 @@ exports.getAllRecipes = (req, res) => {
         });
 };
 
-//Récupérer les recettes en fonction des flags
-exports.getRecipesByFlags = (req, res) => {
-    const name = req.query.name;
-    let conditionName = name ? { name: { [Op.like]: `%${name}%` } } : null;
-
-    recipeRepository.findAll({ where: conditionName })
-        .then(recipe => {
-            res.send(recipe);
-        })
-        .catch(err => {
-            res.status(500).send({
-                message:
-                    err.message || "Le serveur ne répond pas."
-            });
-        });
-};
 
 // Récupérer une recette
 exports.getOneRecipe = (req, res) => {
@@ -178,7 +161,6 @@ exports.patchRecipe = async (req, res) => {
 
 exports.deleteOneRecipe = async (req, res) => {
     const id = req.params.id;
-    console.log(id)
 
     // Récupération de la recette à supprimer
     const recipeToDelete = await recipeRepository.findByPk(req.params.id);

@@ -29,11 +29,6 @@ module.exports = function(app) {
         [authJwt.verifyToken],
         controller.getOneRecipe
     );
-    app.get(
-        "/api/recipes/",
-        [authJwt.verifyToken],
-        controller.getRecipesByFlags
-    );
 
     app.patch(
         "/api/recipes/:id",

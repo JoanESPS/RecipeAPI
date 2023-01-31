@@ -64,7 +64,6 @@ exports.signin = (req, res) => {
                 });
             }
             var roles = await user.getRoles()
-            console.log (roles)
 
             var token = jwt.sign({ id: user.id, roles: roles }, config.secret, {
                 expiresIn: 86400 // 24 hours
