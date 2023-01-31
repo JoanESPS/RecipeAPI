@@ -27,9 +27,7 @@ db.sequelize = sequelize;
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.role = require("../models/role.model.js")(sequelize, Sequelize);
 db.recipe = require("../models/recipe.model.js")(sequelize, Sequelize);
-db.ingredient = require("../models/ingredient.model.js")(sequelize, Sequelize);
-db.recipeIngredient = require("../models/recipeIngredient.model.js")(sequelize, Sequelize);
-db.recipeUser = require("../models/recipeUser.model.js")(sequelize, Sequelize);
+db.categories = require("../models/category.model.js")(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
     through: "user_roles",
@@ -42,8 +40,18 @@ db.user.belongsToMany(db.role, {
     otherKey: "roleId"
 });
 
+db.categories.belongsToMany(db.recipe, {
+    through: "recipe_category",
+    foreignKey: "categoryId",
+    otherKey: "recipeId"
+});
+db.recipe.belongsToMany(db.categories, {
+    through: "recipe_category",
+    foreignKey: "recipeId",
+    otherKey: "categoryId"
+});
+
 db.ROLES = ["user", "admin", "moderator"];
-db.SEASONS = ["spring", "summer", "fall", "winter"];
 
 
 module.exports = db;

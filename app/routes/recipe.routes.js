@@ -1,6 +1,5 @@
-const { authJwt } = require("../middleware");
+const { authJwt, verifyCategory } = require("../middleware");
 const controller = require("../controllers/recipe.controller");
-const errors = require("../services/errors.services");
 
 
 module.exports = function(app) {
@@ -14,7 +13,7 @@ module.exports = function(app) {
 
     app.post(
         "/api/recipes/",
-        [authJwt.verifyToken],
+        [authJwt.verifyToken, verifyCategory.checkCategoryExisted],
         controller.postRecipe
     );
 
@@ -47,7 +46,3 @@ module.exports = function(app) {
         controller.deleteAllRecipes
     );
 };
-
-
-
-// GET    /api/recipes/flag       retrieve own's recipes depending on flags

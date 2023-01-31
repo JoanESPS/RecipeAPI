@@ -23,6 +23,7 @@ app.get("/", (req, res) => {
 
 const db = require("./app/models");
 const Role = db.role;
+const Category = db.categories;
 
 
 db.sequelize.sync({force: true}).then(() => {
@@ -55,5 +56,29 @@ function initial() {
     Role.create({
         id: 3,
         name: "admin"
+    });
+
+    Category.create({
+        name: "italian"
+    });
+
+    Category.create({
+        name: "french"
+    });
+
+    Category.create({
+        name: "asian"
+    });
+
+    Category.create({
+        name: "vegan"
+    });
+
+    Category.create({
+        name: "hot"
+    });
+
+    Category.create({
+        name: "cold"
     });
 }

@@ -1,10 +1,7 @@
 const db = require("../models");
 const Op = db.Sequelize.Op;
-const bcrypt = require("bcryptjs");
-const usersServices = require("../services/users.services");
-const {authJwt} = require("../middleware");
 const recipeRepository = db.recipe
-const userRepository = db.user
+const Category = db.categories
 
 
 // Création d'une recette
@@ -24,7 +21,24 @@ exports.postRecipe =(req, res) => {
         userId: req.userId
     })
         .then(recipe => {
-            res.send(recipe);
+            if (req.body.categories) {
+                Category.findAll({
+                    where: {
+                        name: {
+                            [Op.or]: req.body.categories
+                        }
+                    }
+                }).then(categories => {
+                    recipe.setCategories(categories).then(() => {
+                        res.status(201).send({
+                            message: `La recette a bien été créée avec les catégories sélectionnées.` });
+                    });
+                });
+            } else {
+                // recette créée sans catégories.
+                    res.status(201).send({
+                        message: `La recette a bien été créée (sans catégories).`});
+            }
         })
         .catch(err => {
             res.status(500).send({
