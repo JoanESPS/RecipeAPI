@@ -105,21 +105,3 @@ exports.deleteOneCategory = async (req, res) => {
             });
         });
 };
-
-exports.deleteAllCategories = async (req, res) => {
-
-    // Suppression de toutes les catégories par un modérateur ou un admin
-    Category.destroy({
-        where: {}
-    })
-        .then(nums => {
-            res.status(200).send({
-                message: `Toutes les catégories ont été supprimées.`
-            })
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: "Le serveur ne répond pas"
-            });
-        });
-}
