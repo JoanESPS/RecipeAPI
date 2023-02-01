@@ -1,7 +1,10 @@
 const db = require("../models");
+const {Sequelize, dataTypes} = require("sequelize");
 const Op = db.Sequelize.Op;
 const recipeRepository = db.recipe
 const Category = db.categories
+const sequelize = db.sequelize
+
 
 
 // Création d'une recette
@@ -50,17 +53,41 @@ exports.postRecipe =(req, res) => {
 
 //Récupérer toutes les recettes avec flags optionnels
 exports.getRecipes = (req, res) => {
+    let query = req.query.categories;
 
-    recipeRepository.findAll({where: req.query})
-        .then(recipe => {
-            res.send(recipe);
-        })
-        .catch(err => {
-            res.status(500).send({
-                message:
-                    err.message || "Le serveur ne répond pas."
+    if (query != undefined) {
+        const rawQuery = `SELECT recipes.id, recipes.name, recipes.userId, recipes.source, recipes.prepTime, recipes.comment
+                      FROM recipeapi.recipes AS recipes
+                      INNER JOIN recipeapi.recipe_category 
+                      ON recipes.id = recipeapi.recipe_category.recipeId
+                      WHERE recipeapi.recipe_category.categoryId IN (${query})
+                      GROUP BY recipeapi.recipe_category.recipeId
+                      HAVING COUNT(distinct recipeapi.recipe_category.categoryId) = ${query.length}`
+
+        sequelize.query(rawQuery)
+            .then(([recipes, metadata]) => {
+                res.send(recipes);
+            })
+            .catch(err => {
+                res.status(500).send({
+                    message:
+                        err.message || "Le serveur ne répond pas."
+                });
             });
-        });
+    }
+
+    else {
+        recipeRepository.findAll({ where: null })
+            .then(data => {
+                res.send(data);
+            })
+            .catch(err => {
+                res.status(500).send({
+                    message:
+                        err.message || "Le serveur ne répond pas."
+                });
+            });
+    }
 };
 
 

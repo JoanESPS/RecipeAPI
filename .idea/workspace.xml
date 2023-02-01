@@ -6,17 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0e00a4a3-0367-493e-855c-6257b831a123" name="Changes" comment="main: recipe.controller.js - add a check of the body in the patch request">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/ingredient.controller.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/controllers/recipe.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/recipe.controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/middleware/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/middleware/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/ingredient.model.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/recipe.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/recipe.model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/recipeIngredient.model.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/recipeUser.model.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/ingredient.routes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/recipe.routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/recipe.routes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,6 +75,7 @@
       <workItem from="1672838132900" duration="21421000" />
       <workItem from="1672992996731" duration="5102000" />
       <workItem from="1675066667243" duration="9735000" />
+      <workItem from="1675238807535" duration="4190000" />
     </task>
     <task id="LOCAL-00001" summary="main: recipe.controller.js - add a check of the body in the patch request">
       <created>1675074657422</created>
