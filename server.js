@@ -1,5 +1,8 @@
-const express = require("express");
 const cors = require("cors");
+const express = require("express");
+bodyParser = require("body-parser");
+swaggerJsdoc = require("swagger-jsdoc");
+swaggerUi = require("swagger-ui-express");
 
 
 const app = express();
@@ -10,10 +13,8 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
-// parse requests of content-type - application/json
+// parse des requêtes
 app.use(express.json());
-
-// parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
 // simple route
@@ -37,8 +38,56 @@ require('./app/routes/user.routes')(app);
 require('./app/routes/recipe.routes')(app);
 require('./app/routes/category.routes')(app);
 
-// set port, listen for requests
-const PORT = parseInt(process.env.PORT) || 8080;
+// Définition du port (variable environnement ou 8080 par défaut
+const PORT = parseInt(process.env.PORT) || 8081;
+
+// paramètres de swagger
+const options = {
+    definition: {
+        openapi: "3.0.0",
+        info: {
+            title: "LogRocket Express API with Swagger",
+            version: "0.1.0",
+            description:
+                "API Express & Sequelize documentée avec Swagger",
+            license: {
+                name: "MIT",
+                url: "https://spdx.org/licenses/MIT.html",
+            },
+            contact: {
+                name: "LogRocket",
+                url: "https://logrocket.com",
+                email: "info@email.com",
+            },
+        },
+        servers: [
+            {
+                url: `http://localhost:${PORT}`,
+            },
+        ],
+    },
+    apis: ["./app/routes/*.js"],
+};
+
+
+// Lancement de swagger
+const specs = swaggerJsdoc(options);
+app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(specs)
+);
+
+// Ajout d'une barre de navigation
+app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(specs, { explorer: true })
+);
+
+
+// Lancement de l'app
+
 app.listen(PORT, () => {
     console.log(`Server is running : http://localhost:${PORT}/`);
 });
