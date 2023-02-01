@@ -42,7 +42,7 @@
  *         createdAt: 2023-02-01T14:35:33.000Z
  *         updatedAt: 2023-02-01T14:35:33.000Z
  *
- * RecipePatch:
+ *     RecipePatch:
  *       type: object
  *       required:
  *         - name
@@ -70,18 +70,12 @@
 /**
  * @swagger
  * tags:
- *   name: Recipes
+ *   name: Recettes
  *   description: Gestionnaire de recettes
  * /api/recipes:
  *   post:
  *     summary: Création d'une nouvelle recette
- *     tags: [Recette]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/RecipePost'
+ *     tags: [Recettes]
  *     responses:
  *       201:
  *         description: La recette a bien été créée avec les catégories sélectionnées..
@@ -94,7 +88,7 @@
  *
  *   get:
  *     summary: Récupération de la liste des recettes
- *     tags: [Recette]
+ *     tags: [Recettes]
  *     responses:
  *       200:
  *         description: Liste de toutes les recettes
@@ -104,12 +98,14 @@
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/RecipeGet'
+ *       500:
+ *         description: Le serveur ne répond pas.
  *
  * /api/recipes/{id}:
  *
  *   get:
  *     summary: Récupération d'une recette par son id
- *     tags: [Recette]
+ *     tags: [Recettes]
  *     parameters:
  *       - in: path
  *         name: id
@@ -128,7 +124,7 @@
  *
  *   patch:
  *    summary: Mise à jour des informations en fonction de l'id
- *    tags: [Recette]
+ *    tags: [Recettes]
  *    parameters:
  *       - in: path
  *         name: id
@@ -152,7 +148,7 @@
  *
  *   delete:
  *     summary: Suppression de la recette en fonction de l'id
- *     tags: [Recette]
+ *     tags: [Recettes]
  *     parameters:
  *       - in: path
  *         name: id
