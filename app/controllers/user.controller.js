@@ -91,7 +91,7 @@ exports.patchUser = async (req, res) => {
                     where : {id: req.params.id}
                 }).catch(err => {
                 res.status(500).send({
-                    message: "Erreur dans le changement d'identifiants pour l'id=" + req.params.id
+                    message: "Erreur dans le changement d'identifiants pour l'id: " + req.params.id
                 })});
             res.status(200).send({
                 message: `Les informations de ${username} ont été changées.`
@@ -99,7 +99,7 @@ exports.patchUser = async (req, res) => {
         }
     }
 
-    // message d'erreur lorsqu'un user souhaite modifier les informations d'un autre user
+    // Message d'erreur lorsqu'un user souhaite modifier les informations d'un autre user
     else {
         res.status(403).send({
             message: "Vous n'avez pas les droits nécessaires à cette action."
@@ -126,7 +126,7 @@ exports.putUser = async (req, res) => {
     }).then(num => {
         if (num == 1) {
             res.status(200).send({
-                message: `Le compte associé de l'utilisateur ${username} (id: ${id}) a bien été mis à jour.`
+                message: `Le compte associé à l'utilisateur ${username} (id: ${id}) a bien été mis à jour.`
             });
         } else {
             res.status(400).send({

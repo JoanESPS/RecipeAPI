@@ -91,11 +91,11 @@ exports.deleteOneCategory = async (req, res) => {
         .then(num => {
             if (num == 1) {
                 res.status(200).send({
-                    message: `La catégorie ${categoryName} (id: ${id}) a été supprimé.`
+                    message: `La catégorie ${categoryName} (id: ${id}) a été supprimée.`
                 });
             } else {
                 res.status(400).send({
-                    message: `${categoryName} (id: ${id}) n'a pas pu être supprimé.`
+                    message: `${categoryName} (id: ${id}) n'a pas pu être supprimée.`
                 });
             }
         })
@@ -108,7 +108,7 @@ exports.deleteOneCategory = async (req, res) => {
 
 exports.deleteAllCategories = async (req, res) => {
 
-    // Suppression de toutes les catégories par un modérateur
+    // Suppression de toutes les catégories par un modérateur ou un admin
     Category.destroy({
         where: {}
     })

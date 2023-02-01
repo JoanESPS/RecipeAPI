@@ -1,5 +1,4 @@
 const db = require("../models");
-const {Sequelize, dataTypes} = require("sequelize");
 const Op = db.Sequelize.Op;
 const recipeRepository = db.recipe
 const Category = db.categories
@@ -45,7 +44,7 @@ exports.postRecipe =(req, res) => {
         })
         .catch(err => {
             res.status(500).send({
-                message : err.message || "Le serveur ne répond pas"
+                message : err.message || "Le serveur ne répond pas."
             });
         });
 };

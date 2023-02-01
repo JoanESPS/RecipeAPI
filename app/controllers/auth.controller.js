@@ -2,21 +2,21 @@ const db = require("../models");
 const config = require("../config/auth.config");
 const User = db.user;
 const Role = db.role;
-const usersServices = require("../services/users.services")
 
 const Op = db.Sequelize.Op;
 
-var jwt = require("jsonwebtoken");
-var bcrypt = require("bcryptjs");
+let jwt = require("jsonwebtoken");
+let bcrypt = require("bcryptjs");
 
 exports.signup = (req, res) => {
-    // Save User to Database
+    // Inscription d'un utilisateur
     User.create({
         username: req.body.username,
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, 8)
     })
         .then(user => {
+            // Si le body mentionne un rôle
             if (req.body.roles) {
                 Role.findAll({
                     where: {
@@ -26,13 +26,13 @@ exports.signup = (req, res) => {
                     }
                 }).then(roles => {
                     user.setRoles(roles).then(() => {
-                        res.status(201).send({ message: `L'utilisateur a bien été créé.` });
+                        res.status(201).send({ message: `L'utilisateur ${req.body.username} a bien été créé.` });
                     });
                 });
             } else {
-                // user role = 1
+                // Si le body ne mentionne pas de rôle, il est défini à 'user' par défaut
                 user.setRoles([1]).then(() => {
-                    res.status(201).send({ message: `L'utilisateur a bien été créé.` });
+                    res.status(201).send({ message: `L'utilisateur ${req.body.username} a bien été créé.` });
                 });
             }
         })
