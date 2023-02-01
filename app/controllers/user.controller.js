@@ -168,21 +168,3 @@ exports.deleteUser = async (req, res) => {
             });
         });
 }
-
-
-exports.deleteAllUsers = async (req, res) => {
-
-    // Suppression de tous les comptes utilisateur par un admin
-        userRepository.destroy({
-            where: {}
-        })
-            .then(nums => {
-                    res.status(200).send({
-                        message: `Tous les utilisateurs ont été supprimés.`
-                    })})
-            .catch(err => {
-                res.status(500).send({
-                    message: "Le serveur ne répond pas"
-                });
-            });
-}

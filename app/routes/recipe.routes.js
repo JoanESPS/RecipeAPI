@@ -32,27 +32,6 @@
  *
  *     RecipeGet:
  *       type: object
- *       required:
- *         - name
- *         - source
- *       properties:
- *         userId:
- *           type: integer
- *           description: Id généré par Sequelize
- *         name:
- *           type: string
- *           description: Le nom de la recette
- *         source:
- *           type: string
- *           description: Source de la recette
- *         prepTime:
- *           type: integer
- *           description: Temps de préparation totale de la recette
- *         comment:
- *           type: string
- *           description: Commentaires
- *         categories:
- *           type: array
  *       example:
  *         id: 1
  *         name: Tartiflette
@@ -69,9 +48,6 @@
  *         - name
  *         - source
  *       properties:
- *         userId:
- *           type: integer
- *           description: Id généré par Sequelize
  *         name:
  *           type: string
  *           description: Le nom de la recette
@@ -84,8 +60,6 @@
  *         comment:
  *           type: string
  *           description: Commentaires
- *         categories:
- *           type: array
  *       example:
  *         name: Crousiflette
  *         source: Livre de cuisine - page 13
@@ -131,14 +105,6 @@
  *               items:
  *                 $ref: '#/components/schemas/RecipeGet'
  *
- *   delete:
- *     summary: Suppression de toutes les recettes
- *     tags: [Recette]
- *     responses:
- *       200:
- *         description: Toutes les recettes ont été supprimées.
- *       500:
- *          description: Le serveur ne répond pas.
  * /api/recipes/{id}:
  *
  *   get:
@@ -244,10 +210,5 @@ module.exports = function(app) {
         "/api/recipes/:id",
         [authJwt.verifyToken, errors.isRecipeIdExisting],
         controller.deleteOneRecipe
-    );
-    app.delete(
-        "/api/recipes/",
-        [authJwt.verifyToken, authJwt.isModeratorOrAdmin],
-        controller.deleteAllRecipes
     );
 };

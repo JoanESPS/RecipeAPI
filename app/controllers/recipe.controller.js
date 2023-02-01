@@ -211,21 +211,3 @@ exports.deleteOneRecipe = async (req, res) => {
         });
     }
 };
-
-exports.deleteAllRecipes = async (req, res) => {
-
-    // Suppression de toutes les recettes par un modérateur
-    recipeRepository.destroy({
-        where: {}
-    })
-        .then(nums => {
-            res.status(200).send({
-                message: `Toutes les recettes ont été supprimées.`
-            })
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: "Le serveur ne répond pas"
-            });
-        });
-}

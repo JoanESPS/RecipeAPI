@@ -40,10 +40,4 @@ module.exports = function(app) {
         [authJwt.verifyToken, authJwt.isAdmin, errors.isUserIdExisting],
         controller.deleteUser
     )
-
-    app.delete(
-        "/api/users",
-        [authJwt.verifyToken, authJwt.isAdmin],
-        controller.deleteAllUsers
-    )
 };
