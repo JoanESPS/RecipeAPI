@@ -9,7 +9,7 @@
  *       properties:
  *         name:
  *           type: string
- *           description: Le nom de la recette
+ *           description: Le nom de la catégorie
  *       example:
  *         name: French
  *
@@ -28,7 +28,7 @@
  *       properties:
  *         name:
  *           type: string
- *           description: Le nom de la recette
+ *           description: Le nom de la catégorie
  *       example:
  *         name: Savoyard
  */
