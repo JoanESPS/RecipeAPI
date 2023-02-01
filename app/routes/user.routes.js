@@ -19,25 +19,25 @@ module.exports = function(app) {
 
     app.get(
         "/api/users/:id",
-        [authJwt.verifyToken, authJwt.isAdmin, errors.isIdExisting],
+        [authJwt.verifyToken, authJwt.isAdmin, errors.isUserIdExisting],
         controller.getOneUser
     )
 
     app.patch(
         "/api/users/:id",
-        [authJwt.verifyToken, errors.isIdExisting],
+        [authJwt.verifyToken, errors.isUserIdExisting],
         controller.patchUser
     );
 
     app.put(
         "/api/users/:id",
-        [authJwt.verifyToken, authJwt.isAdmin, errors.isIdExisting],
+        [authJwt.verifyToken, authJwt.isAdmin, errors.isUserIdExisting],
         controller.putUser
     );
 
     app.delete(
         "/api/users/:id",
-        [authJwt.verifyToken, authJwt.isAdmin, errors.isIdExisting],
+        [authJwt.verifyToken, authJwt.isAdmin, errors.isUserIdExisting],
         controller.deleteUser
     )
 

@@ -21,8 +21,26 @@ checkCategoryExisted = async (req, res, next) => {
     next();
 };
 
+checkDuplicateCategory = (req, res, next) => {
+    // Catégorie
+    Category.findOne({
+        where: {
+            name: req.body.name
+        }
+    }).then(category => {
+        if (category) {
+            res.status(400).send({
+                message: "Cette catégorie existe déjà."
+            });
+            return;
+        }
+            next();
+        });
+};
+
 const verifyCategory = {
-    checkCategoryExisted: checkCategoryExisted
+    checkCategoryExisted: checkCategoryExisted,
+    checkDuplicateCategory: checkDuplicateCategory
 };
 
 module.exports = verifyCategory;

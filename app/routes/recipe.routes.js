@@ -1,5 +1,6 @@
 const { authJwt, verifyCategory } = require("../middleware");
 const controller = require("../controllers/recipe.controller");
+const errors = require("../services/errors.services");
 
 
 module.exports = function(app) {
@@ -25,19 +26,19 @@ module.exports = function(app) {
 
     app.get(
         "/api/recipes/:id",
-        [authJwt.verifyToken],
+        [authJwt.verifyToken, errors.isRecipeIdExisting],
         controller.getOneRecipe
     );
 
     app.patch(
         "/api/recipes/:id",
-        [authJwt.verifyToken],
+        [authJwt.verifyToken, errors.isRecipeIdExisting],
         controller.patchRecipe
     );
 
     app.delete(
         "/api/recipes/:id",
-        [authJwt.verifyToken],
+        [authJwt.verifyToken, errors.isRecipeIdExisting],
         controller.deleteOneRecipe
     );
     app.delete(
