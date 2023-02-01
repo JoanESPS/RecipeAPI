@@ -6,12 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0e00a4a3-0367-493e-855c-6257b831a123" name="Changes" comment="main: recipe.controller.js - add a get recipes by categories">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/middleware/authJwt.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/middleware/authJwt.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/middleware/verifyCategory.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/middleware/verifyCategory.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/middleware/verifySignUp.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/middleware/verifySignUp.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/errors.services.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/errors.services.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/users.services.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/users.services.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/recipe.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/recipe.controller.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

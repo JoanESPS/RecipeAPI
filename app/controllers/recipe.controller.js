@@ -20,7 +20,9 @@ exports.postRecipe =(req, res) => {
     recipeRepository.create({
         name: req.body.name,
         source: req.body.source,
-        userId: req.userId
+        userId: req.userId,
+        prepTime: req.body.prepTime,
+        comment: req.body.comment
     })
         .then(recipe => {
             if (req.body.categories) {
@@ -113,30 +115,16 @@ exports.getOneRecipe = (req, res) => {
 
 // Changement des informations d'une recette
 exports.patchRecipe = async (req, res) => {
-    // Récupération du user à modifier
+    // Récupération de la recette à modifier
     const recipeToModify = await recipeRepository.findByPk(req.params.id);
     let testBody = true;
     let keyList = [];
     // Organisation du body
     const recipe = {
-        newName: req.body.newName || recipeToModify.name,
-        newUserId: req.body.newUserId || recipeToModify.userId,
-        newSource: req.body.newSource || recipeToModify.source,
-        newTarget: req.body.newTarget || recipeToModify.target,
-        newVegetarian: req.body.newVegetarian || recipeToModify.vegetarian,
-        newVegan: req.body.newVegan || recipeToModify.vegan,
-        newCountry: req.body.newCountry || recipeToModify.country,
-        newHot: req.body.newHot || recipeToModify.hot,
-        newCold: req.body.newCold || recipeToModify.cold,
-        newSeason: req.body.newSeason || recipeToModify.season,
-        newCookTime: req.body.newCookTime || recipeToModify.cookTime,
-        newPrepTime: req.body.newPrepTime || recipeToModify.prepTime,
-        newTotalTime: req.body.newTotalTime || recipeToModify.totalTime,
-        newDifficulty: req.body.newDifficulty || recipeToModify.difficulty,
-        newSrcRating: req.body.newSrcRating || recipeToModify.srcRating,
-        newUserRating: req.body.newUserRating || recipeToModify.userRating,
-        newTried: req.body.newTried || recipeToModify.tried,
-        newComment: req.body.newComment || recipeToModify.comment,
+        name: req.body.name|| recipeToModify.name,
+        source: req.body.source || recipeToModify.source,
+        prepTime: req.body.prepTime || recipeToModify.prepTime,
+        comment: req.body.comment || recipeToModify.comment,
     }
 
     // On s'assure que les informations mentionnées dans le body sont correctes
@@ -160,24 +148,10 @@ exports.patchRecipe = async (req, res) => {
 
             // Utilisation de .update avec un body déclaré à la main
             await recipeRepository.update({
-                    name: recipe.newName,
-                    userId: recipe.newUserId,
-                    source: recipe.newSource,
-                    target: recipe.newTarget,
-                    vegetarian: recipe.newVegetarian,
-                    vegan: recipe.newVegan,
-                    country: recipe.newCountry,
-                    hot: recipe.newHot,
-                    cold: recipe.newCold,
-                    season: recipe.newSeason,
-                    cookTime: recipe.newCookTime,
-                    prepTime: recipe.newPrepTime,
-                    totalTime: recipe.newTotalTime,
-                    difficulty: recipe.newDifficulty,
-                    srcRating: recipe.newSrcRating,
-                    userRating: recipe.newUserRating,
-                    tried: recipe.newTried,
-                    comment: recipe.newComment,
+                    name: recipe.name,
+                    source: recipe.source,
+                    prepTime: recipe.prepTime,
+                    comment: recipe.comment
                 },
                 {
                     where : {id: req.params.id}
