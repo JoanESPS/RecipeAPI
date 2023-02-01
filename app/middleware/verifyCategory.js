@@ -2,6 +2,7 @@ let db = require('../models')
 let Category = db.categories
 
 
+// Vérification de l'existence de la catégorie
 checkCategoryExisted = async (req, res, next) => {
     let CATEGORIES = await Category.findAll({
         attributes: ['name']
@@ -21,6 +22,7 @@ checkCategoryExisted = async (req, res, next) => {
     next();
 };
 
+// Assurance de non doublon d'une catégorie
 checkDuplicateCategory = (req, res, next) => {
     // Catégorie
     Category.findOne({

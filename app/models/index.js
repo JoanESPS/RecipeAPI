@@ -29,6 +29,8 @@ db.role = require("../models/role.model.js")(sequelize, Sequelize);
 db.recipe = require("../models/recipe.model.js")(sequelize, Sequelize);
 db.categories = require("../models/category.model.js")(sequelize, Sequelize);
 
+
+//Création de la table de liaison utilisateur-rôle
 db.role.belongsToMany(db.user, {
     through: "user_roles",
     foreignKey: "roleId",
@@ -40,6 +42,7 @@ db.user.belongsToMany(db.role, {
     otherKey: "roleId"
 });
 
+//Création de la table de liaison recette-catégorie
 db.categories.belongsToMany(db.recipe, {
     through: "recipe_category",
     foreignKey: "categoryId",
@@ -51,6 +54,7 @@ db.recipe.belongsToMany(db.categories, {
     otherKey: "categoryId"
 });
 
+// Liste des rôles existants pour export
 db.ROLES = ["user", "admin", "moderator"];
 
 

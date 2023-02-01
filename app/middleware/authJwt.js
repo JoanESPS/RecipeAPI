@@ -3,19 +3,21 @@ const config = require("../config/auth.config.js");
 const db = require("../models");
 const User = db.user;
 
+
+// Vérification du header du token d'authentification (contient l'id du user et son rôle)
 verifyToken = (req, res, next) => {
     let token = req.headers["x-access-token"];
 
     if (!token) {
         return res.status(401).send({
-            message: "No token provided!"
+            message: "Aucun token fourni."
         });
     }
 
     jwt.verify(token, config.secret, (err, decoded) => {
         if (err) {
             return res.status(403).send({
-                message: "Unauthorized!"
+                message: "Accès non autorisé."
             });
         }
         req.userId = decoded.id;
@@ -24,6 +26,7 @@ verifyToken = (req, res, next) => {
     });
 };
 
+// Test admin
 isAdmin = (req, res, next) => {
     User.findByPk(req.userId).then(user => {
         user.getRoles().then(roles => {
@@ -35,13 +38,14 @@ isAdmin = (req, res, next) => {
             }
 
             res.status(403).send({
-                message: "Require Admin Role!"
+                message: "Droits administrateur requis."
             });
             return;
         });
     });
 };
 
+// Test modérateur
 isModerator = (req, res, next) => {
     User.findByPk(req.userId).then(user => {
         user.getRoles().then(roles => {
@@ -53,12 +57,13 @@ isModerator = (req, res, next) => {
             }
 
             res.status(403).send({
-                message: "Require Moderator Role!"
+                message: "Droits modérateur requis."
             });
         });
     });
 };
 
+// Test modérateur ou admin
 isModeratorOrAdmin = (req, res, next) => {
     User.findByPk(req.userId).then(user => {
         user.getRoles().then(roles => {
@@ -75,7 +80,7 @@ isModeratorOrAdmin = (req, res, next) => {
             }
 
             res.status(403).send({
-                message: "Require Moderator or Admin Role!"
+                message: "Droits modérateur ou administrateur requis."
             });
         });
     });

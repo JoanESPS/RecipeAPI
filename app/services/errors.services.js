@@ -3,6 +3,7 @@ const userRepository = db.user;
 const recipeRepository = db.recipe;
 const categoryRepository = db.categories;
 
+// Vérification existence d'un id utilisateur
 isUserIdExisting = (req, res, next) => {
     const id = req.params.id;
     userRepository.findOne({
@@ -12,18 +13,19 @@ isUserIdExisting = (req, res, next) => {
             user => {
                 if (!user) {
                     return res.status(404).send({
-                        message: "Utilisateur non trouvé"
+                        message: "Utilisateur non trouvé."
                     })
                 }
                 next();
             })
         .catch(err => {
             res.status(500).send({
-                message: "Le serveur ne répond pas"
+                message: "Le serveur ne répond pas."
             });
         });
 }
 
+// Vérification existence id recette
 isRecipeIdExisting = (req, res, next) => {
     const id = req.params.id;
     recipeRepository.findOne({
@@ -33,18 +35,19 @@ isRecipeIdExisting = (req, res, next) => {
             recipe => {
                 if (!recipe) {
                     return res.status(404).send({
-                        message: "Recette non trouvé"
+                        message: "Recette non trouvée."
                     })
                 }
                 next();
             })
         .catch(err => {
             res.status(500).send({
-                message: "Le serveur ne répond pas"
+                message: "Le serveur ne répond pas."
             });
         });
 }
 
+// Vérification existence id catégorie
 isCategoryIdExisting = (req, res, next) => {
     const id = req.params.id;
     categoryRepository.findOne({
@@ -54,14 +57,14 @@ isCategoryIdExisting = (req, res, next) => {
             category => {
                 if (!category) {
                     return res.status(404).send({
-                        message: "Catégorie non trouvé"
+                        message: "Catégorie non trouvée."
                     })
                 }
                 next();
             })
         .catch(err => {
             res.status(500).send({
-                message: "Le serveur ne répond pas"
+                message: "Le serveur ne répond pas."
             });
         });
 }
