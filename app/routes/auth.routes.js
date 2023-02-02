@@ -66,7 +66,7 @@
  *         id: 1
  *         username: Thomas_Morgana
  *         email: thomas.morgana33@ynov.com
- *         password: 123456
+ *         password: kjhsgfg656s3dg3965gv9w65
  *         roles: [admin, moderator, user]
  *
  */
