@@ -38,6 +38,7 @@ app.get("/", (req, res) => {
 const db = require("./app/models");
 const Role = db.role;
 const Category = db.categories;
+const Recipe = db.recipe;
 
 
 db.sequelize.sync({force: true}).then(() => {
@@ -58,8 +59,8 @@ const options = {
     definition: {
         openapi: "3.0.0",
         info: {
-            title: "LogRocket Express API with Swagger",
-            version: "0.1.0",
+            title: "RecipeAPI Express API with Swagger",
+            version: "1.0.0",
             description:
                 "API Express & Sequelize documentée avec Swagger",
             license: {
@@ -67,8 +68,8 @@ const options = {
                 url: "https://spdx.org/licenses/MIT.html",
             },
             contact: {
-                name: "LogRocket",
-                url: "https://logrocket.com",
+                name: "Joan et Nicolas",
+                url: `http://localhost:${PORT}`,
                 email: "info@email.com",
             },
         },
@@ -133,7 +134,7 @@ function initial() {
     });
 
     Category.create({
-        name: "vegan"
+        name: "vegetarian"
     });
 
     Category.create({
@@ -142,5 +143,41 @@ function initial() {
 
     Category.create({
         name: "cold"
+    });
+
+    Recipe.create({
+        name: "pasta alla bolognese",
+        source: "Livre de recette italienne, page 15",
+        prepTime: 30,
+        comment: "C'est super bon !"
+    });
+
+    Recipe.create({
+        name: "salade de chèvre chaud",
+        source: "https://www.marmiton.org/recettes/recette_salade-de-chevre-chaud-miel-et-noix_228075.aspx",
+        prepTime: 15,
+        comment: "C'est super bon !"
+    });
+
+    Recipe.create({
+        name: "boeuf bourguignon",
+        source: "Livre de recette de mamie, page 8",
+        prepTime: 150,
+        comment: "C'est super bon !"
+    });
+
+
+    Recipe.create({
+        name: "quiche lorraine",
+        source: "https://www.marmiton.org/recettes/recette_quiche-lorraine-de-sophie_57113.aspx",
+        prepTime: 45,
+        comment: "C'est super bon !"
+    });
+
+    Recipe.create({
+        name: "oeuf au plat",
+        source: "Livre sur les oeufs, page 19",
+        prepTime: 5,
+        comment: "C'est super bon !"
     });
 }
