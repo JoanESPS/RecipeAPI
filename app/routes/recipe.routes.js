@@ -76,13 +76,15 @@
  *   post:
  *     summary: Création d'une nouvelle recette
  *     tags: [Recettes]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/RecipePost'
  *     responses:
  *       201:
- *         description: La recette a bien été créée avec les catégories sélectionnées..
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/RecipePost'
+ *         description: La recette a bien été créée avec les catégories sélectionnées.
  *       500:
  *         description: Le serveur ne répond pas.
  *
