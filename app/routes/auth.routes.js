@@ -30,6 +30,22 @@
  *
  *     UserSignIn:
  *       type: object
+ *       required:
+ *         - username
+ *         - password
+ *       properties:
+ *         username:
+ *           type: string
+ *           description: Pseudo choisi par l'utilisateur
+ *         password:
+ *           type: string
+ *           description: Mot de passe choisi par l'utilisateur
+ *       example:
+ *         username: Thomas_Morgana
+ *         password: 123456
+ *
+ *     UserSignInOk:
+ *       type: object
  *       properties:
  *         id:
  *           type: integer
@@ -80,12 +96,18 @@
  *   post:
  *     summary: Connexion d'un utilisateur
  *     tags: [Utilisateurs]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UserSignIn'
  *     responses:
  *       200:
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/UserSignIn'
+ *               $ref: '#/components/schemas/UserSignInOk'
  *       500:
  *         description: Le serveur ne répond pas.
  */
