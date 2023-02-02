@@ -4,11 +4,13 @@ bodyParser = require("body-parser");
 swaggerJsdoc = require("swagger-jsdoc");
 swaggerUi = require("swagger-ui-express");
 
+// Définition du port (variable environnement ou 8080 par défaut
+const PORT = parseInt(process.env.PORT) || 8081;
 
 const app = express();
 
 var corsOptions = {
-    origin: "http://localhost:8081"
+    origin: `http://localhost:${PORT}`
 };
 
 app.use(cors(corsOptions));
@@ -16,10 +18,21 @@ app.use(cors(corsOptions));
 // parse des requêtes
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const message = "Bienvenue sur RecipeAPI              " +
+    "API de gestion de recettes de cuisines organisées par catégories." +
+    "Le rôle de cette API est de pouvoir stocker les recettes de cuisines que l'on souhaite avec leur source (livre de cuisine ou lien internet)." +
+    "Par ailleurs elle permet aussi de pouvoir faire de la recherche de recette de cuisine selon les catégories renseignées, par exemple on peut afficher toutes les recettes de cuisine qui sont italiennes. Plus il y a de catégories demandées, plus c'est restrictif." +
+    "Cette API comporte 3 CRUD complet, les user, les recettes et les catégories." +
+    "Le CRUD user permet de créer des comptes utilisateurs, modérateurs ou administrateurs avec des autorisations différentes. On peut se connecter à ces comptes via un mot de passe et récupérer un JSON web token." +
+    "Les users peuvent utiliser les CRUD de recettes et catégories complets avec une restriction sur les PUT et DELETE qui ne fonctionnent que sur les recettes ajoutées par eux-même. Concernant le CRUD user, ils peuvent seulement modifier leur propre compte et se connecter." +
+    "Les modérateurs peuvent eux, en plus des possibilités des users, modifier et supprimer les recettes de n'importe quel user." +
+    "Les admins ont en plus des possibilités des moderateurs un accès en suppression, en modification et en visualisation des comptes user (le mot de passe sont crypté, personne n'y a accès)." +
+    `Le lien du swagger pour afficher les routes et détails de fonctionnement de l'application: http://localhost:${PORT}/api-docs/`
+
 
 // simple route
 app.get("/", (req, res) => {
-    res.json({ message: "Welcome to RecipeAPI application." });
+    res.json({ message: message });
 });
 
 const db = require("./app/models");
@@ -38,8 +51,7 @@ require('./app/routes/user.routes')(app);
 require('./app/routes/recipe.routes')(app);
 require('./app/routes/category.routes')(app);
 
-// Définition du port (variable environnement ou 8080 par défaut
-const PORT = parseInt(process.env.PORT) || 8081;
+
 
 // paramètres de swagger
 const options = {
@@ -89,7 +101,7 @@ app.use(
 // Lancement de l'app
 
 app.listen(PORT, () => {
-    console.log(`Server is running : http://localhost:${PORT}/`);
+    console.log(`Le serveur est en ligne : http://localhost:${PORT}/`);
 });
 
 function initial() {
